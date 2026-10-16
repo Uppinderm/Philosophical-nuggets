@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ATHENAEUM — Daily Philosophy</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;line-height:1.5;margin:0;background:#f7f8fb;color:#0b1220}
+    header{background:linear-gradient(90deg,#4b6cb7,#182848);color:#fff;padding:48px 24px;text-align:center}
+    main{max-width:900px;margin:32px auto;padding:0 16px}
+    h1{margin:0 0 8px;font-size:28px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+    .card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .muted{color:#536174;font-size:14px}
+    footer{padding:24px;text-align:center;color:#6b7280;font-size:13px}
+    .btn{display:inline-block;background:#2b6cb0;color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none}
+    textarea{width:100%;min-height:120px;padding:10px;border-radius:8px;border:1px solid #e5e7eb}
+    label{font-weight:600}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ATHENAEUM — Daily Philosophy</h1>
+    <p class="muted">Daily Nugget • Explore Traditions • Wisdom Finder • Thought Experiments • Journal & Saved</p>
+  </header>
+
+  <main>
+    <section class="grid">
+      <div class="card">
+        <h2>Today's Reflection</h2>
+        <p class="muted">Wisdom of the Day</p>
+        <p id="nugget">"The unexamined life is not worth living." — Socrates</p>
+        <p><a class="btn" href="#" onclick="randomNugget();return false;">Random Nugget</a> <a href="#" class="muted" style="margin-left:8px;">Reset to Today</a></p>
+      </div>
+
+      <div class="card">
+        <h2>Personal Reflection Journal</h2>
+        <p class="muted">Saved</p>
+        <label for="reflection">How can you apply this wisdom to your life today?</label>
+        <textarea id="reflection" placeholder="Write your personal thoughts here..."></textarea>
+        <p style="margin-top:8px"><button onclick="saveReflection()" class="btn">Save Reflection</button></p>
+      </div>
+
+      <div class="card">
+        <h2>Philosophical Traditions</h2>
+        <p class="muted">Explore human wisdom across cultures, ages, and schools of thought.</p>
+        <ul>
+          <li>Ancient (Stoicism, Platonism, Confucianism)</li>
+          <li>Medieval (Scholasticism, Sufism)</li>
+          <li>Modern (Existentialism, Utilitarianism)</li>
+          <li>Contemporary (Phenomenology, Analytic, Pragmatism)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Philosophical Prescription</h2>
+        <p class="muted">What are you seeking today?</p>
+        <form onsubmit="applyPrescription(event)">
+          <select id="prescription" style="width:100%;padding:10px;border-radius:8px;border:1px solid #e5e7eb">
+            <option>Peace of Mind</option>
+            <option>Resilience</option>
+            <option>Purpose</option>
+            <option>Decision Making</option>
+            <option>Connection</option>
+            <option>Curiosity</option>
+          </select>
+          <p style="margin-top:8px"><button class="btn">Recommended Insights</button></p>
+        </form>
+      </div>
+    </section>
+
+    <section style="margin-top:24px" class="card">
+      <h2>Thought Experiment Simulator</h2>
+      <p class="muted">Test your intuition against classic ethical paradoxes and metaphysical conundrums.</p>
+      <p>Try a thought experiment: <a href="#">Trolley Problem</a> • <a href="#">Ship of Theseus</a></p>
+    </section>
+
+    <section style="margin-top:24px" class="grid">
+      <div class="card">
+        <h3>Saved Wisdom & Reflections</h3>
+        <p class="muted">Your personal archive of bookmarked insights and reflection notes.</p>
+        <p>Bookmarked Nuggets (0) • My Journal Notes (0)</p>
+      </div>
+
+      <div class="card">
+        <h3>Athenaeum Daily Philosophical Sanctuary</h3>
+        <p class="muted">Built for quiet reflection and lifelong learning.</p>
+        <blockquote style="margin:0;padding-left:12px;color:#334155">"The unexamined life is not worth living." — Socrates</blockquote>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made with care — Athenaeum Daily Philosophy</p>
+    <p class="muted">Repository: <a href="https://github.com/Uppinderm/Philosophical-nuggets">Uppinderm/Philosophical-nuggets</a></p>
+  </footer>
+
+  <script>
+    const nuggets = [
+      '"The unexamined life is not worth living." — Socrates',
+      '"Happiness is not an ideal of reason but of imagination." — Immanuel Kant',
+      '"It is not that we have a short time to live, but that we waste much of it." — Seneca',
+      '"Two things are infinite: the universe and human stupidity; and I am not sure about the universe." — Albert Einstein'
+    ];
+
+    function randomNugget(){
+      const n = nuggets[Math.floor(Math.random()*nuggets.length)];
+      document.getElementById('nugget').textContent = n;
+    }
+
+    function saveReflection(){
+      const text = document.getElementById('reflection').value.trim();
+      if(!text){alert('Please write something to save.');return}
+      // naive local save
+      const notes = JSON.parse(localStorage.getItem('athenaeum_notes')||'[]');
+      notes.push({text,when:new Date().toISOString()});
+      localStorage.setItem('athenaeum_notes',JSON.stringify(notes));
+      alert('Reflection saved locally.');
+      document.getElementById('reflection').value='';
+    }
+
+    function applyPrescription(e){
+      e.preventDefault();
+      const choice = document.getElementById('prescription').value;
+      alert('Recommended insights for: ' + choice + '\n(Feature coming soon)');
+    }
+  </script>
+</body>
+</html>
